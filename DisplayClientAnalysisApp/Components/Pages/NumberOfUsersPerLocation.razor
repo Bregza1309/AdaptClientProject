@@ -1,0 +1,52 @@
+﻿@page "/numberOfUsersPerLocation"
+@inject IHttpClientFactory clientFactory
+
+<PageTitle>Clients</PageTitle>
+
+<h1>Clients Analysis</h1>
+
+<p>Table shows the Number of Users  Per location</p>
+
+@if (data == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Number of Users</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var location in data.Keys)
+            {
+                <tr>
+                    <td>@location.ToUpper()</td>
+                    <td>@data[location]</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private HttpClient httpClient = new();
+
+    private Dictionary<string, int>? data;
+
+    protected override async Task OnInitializedAsync()
+    {
+        httpClient = clientFactory.CreateClient(name: "Clients.WebApi");
+        HttpRequestMessage request = new(
+    method: HttpMethod.Get, requestUri: "api/numberOfUsersPerLocation");
+        HttpResponseMessage response = await httpClient.SendAsync(request);
+        data = await response.Content.ReadFromJsonAsync<Dictionary<string,int>>();
+
+    }
+
+   
+}

@@ -1,0 +1,32 @@
+﻿@model Client
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="card-title text-center mb-4">Client Registration</h2>
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label for="clientName" class="form-label">Client Name</label>
+                            <input type="text" asp-for=ClientName class="form-control" id="clientName" placeholder="Enter client name">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" asp-for=Location class="form-control" id="location" placeholder="Enter location">
+                        </div>
+                        <div class="mb-4">
+                            <label for="numberOfUsers" class="form-label">Number of Users</label>
+                            <input type="number" asp-for="NumberOfUsers" class="form-control" id="numberOfUsers" placeholder="Enter number of users" min="1">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
