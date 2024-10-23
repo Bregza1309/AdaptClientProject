@@ -14,7 +14,7 @@ namespace AdaptClientProjectApi.Extensions
 				var result = await clientRepository.GetNumberOfClientsCreatedPerDateAsync();
 				return result;
 			})
-				.WithDescription("Get Clients Created Per Dated")
+				.WithDescription("Get Clients Created Per Date")
 				.WithOpenApi()
 				.Produces<Dictionary<DateOnly, int>>(Status200OK);
 
