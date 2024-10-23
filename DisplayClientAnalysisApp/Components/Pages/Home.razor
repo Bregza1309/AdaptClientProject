@@ -1,13 +1,11 @@
 ﻿@page "/"
-
+@inject IHttpClientFactory clientFactory
 <PageTitle>Home</PageTitle>
 
 <div class="flex-column align-items-center justify-content-center">
     <h1>Client Analysis</h1>
-    <p>Number of users overall across clients : <span class="text-success">10</span></p>
+    <p>Number of users overall across clients : <span class="text-success">@data</span></p>
     <nav class="flex-column">
-       
-
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="clientsCreatedPerDate">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> ClientsCreatedPerDate
@@ -17,7 +15,23 @@
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> UsersPerLocation
             </NavLink>
         </div>
-
     </nav>
 </div>
+@code {
+    private HttpClient httpClient = new();
+
+    private string data = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        httpClient = clientFactory.CreateClient(name: "Clients.WebApi");
+        HttpRequestMessage request = new(
+    method: HttpMethod.Get, requestUri: "api/numberOfUsersOverall");
+        HttpResponseMessage response = await httpClient.SendAsync(request);
+        data = await response.Content.ReadAsStringAsync();
+
+    }
+
+
+}
 
